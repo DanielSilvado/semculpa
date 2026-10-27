@@ -129,3 +129,37 @@ export function Particles() {
     </div>
   )
 }
+
+/**
+ * Topo do celular: a foto ocupa a largura da tela e se dissolve no fundo, com
+ * uma rosa dos ventos grande e apagada saindo da borda (no desktop entra a bússola).
+ */
+export function MobilePhotoTop({
+  src,
+  alt,
+  width,
+  height,
+  position,
+}: {
+  src: string
+  alt: string
+  width: number
+  height: number
+  position: string
+}) {
+  return (
+    <div className="relative h-[min(330px,42svh)] w-full shrink-0 overflow-hidden">
+      <img
+        src={src}
+        alt={alt}
+        width={width}
+        height={height}
+        fetchPriority="high"
+        decoding="async"
+        className="foto-topo entrada-foto h-full w-full object-cover"
+        style={{ objectPosition: position }}
+      />
+      <CompassRose className="entrada-rosa rosa-gira absolute -bottom-[110px] -right-[120px] h-[300px] w-[300px] text-gold-light/50" />
+    </div>
+  )
+}

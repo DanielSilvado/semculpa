@@ -123,6 +123,11 @@
     animation: roda 120s linear infinite;
   }
 
+  .foto-topo {
+    -webkit-mask-image: linear-gradient(180deg, #000 55%, transparent 100%);
+    mask-image: linear-gradient(180deg, #000 55%, transparent 100%);
+  }
+
   .bussola-foto {
     border-radius: 50%;
     padding: 4px;

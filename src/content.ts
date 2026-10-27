@@ -275,6 +275,8 @@ export const sale = {
   cta: 'Quero aprender a me posicionar',
   highlights: ['Ao vivo com Milena Grisólia + gravação por 1 ano', 'Material didático escrito + plano prático de 21 dias'],
   photo: '/images/milena-turma-circulo.webp',
+  /** Recorte do topo no celular (a foto ocupa a largura da tela). */
+  photoMobile: '/images/milena-turma-mobile.webp',
   photoAlt: 'Milena Grisólia sorrindo diante de uma turma de alunas com os braços erguidos',
   pins: { here: 'Seu próximo passo', date: '11/11 · 20h' },
   countdown: { label: 'A imersão começa em', live: 'A imersão está acontecendo agora', units: ['dias', 'horas', 'min', 'seg'] },

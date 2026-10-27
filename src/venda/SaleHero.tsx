@@ -3,7 +3,8 @@ import { useCountdown } from '../lib/countdown'
 import { useHeroRoute } from '../lib/heroRoute'
 import { rich } from '../lib/rich'
 import { ImersaoMark } from '../components/BrandMark'
-import { CompassRose, Pin, Trail } from '../captura/ui'
+import { useWide } from '../lib/media'
+import { CompassRose, MobilePhotoTop, Pin, Trail } from '../captura/ui'
 import { CountdownBoxes, OfferLink } from './ui'
 
 /** Faixa fixa do topo. */
@@ -58,6 +59,7 @@ function Check() {
 
 export function SaleHero() {
   const { area, pin, form, route } = useHeroRoute()
+  const wide = useWide()
   return (
     <>
       <main
@@ -69,24 +71,27 @@ export function SaleHero() {
           <Trail d={route.d} viewBox={`0 0 ${route.w} ${route.h}`} drawn className="trilha-topo pointer-events-none absolute inset-0 z-[1] h-full w-full" />
         )}
 
-        {/* Bússola com a Milena e a turma ao fundo */}
-        <div className="relative mt-5 flex aspect-square w-[min(66vw,32svh)] shrink-0 items-center justify-center min-[900px]:mt-0 min-[900px]:w-[min(40vw,540px)]">
-          <div aria-hidden="true" className="halo left-1/2 top-1/2 aspect-square w-[125%]" />
-          <CompassRose className="entrada-rosa rosa-gira absolute inset-0 h-full w-full text-gold-light/70" />
-          <div className="bussola-foto entrada-foto relative aspect-square w-[64%]">
-            <img src={sale.photo} alt={sale.photoAlt} width={900} height={900} fetchPriority="high" decoding="async" style={{ objectPosition: '50% 30%' }} />
+        {/* Celular: a Milena com a turma, de ponta a ponta. Desktop: a Milena no centro da bússola */}
+        {!wide && <MobilePhotoTop src={sale.photoMobile} alt={sale.photoAlt} width={1080} height={977} position="50% 20%" />}
+        {wide && (
+          <div className="relative flex aspect-square w-[min(40vw,540px)] shrink-0 items-center justify-center">
+            <div aria-hidden="true" className="halo left-1/2 top-1/2 aspect-square w-[125%]" />
+            <CompassRose className="entrada-rosa rosa-gira absolute inset-0 h-full w-full text-gold-light/70" />
+            <div className="bussola-foto entrada-foto relative aspect-square w-[64%]">
+              <img src={sale.photo} alt={sale.photoAlt} width={900} height={900} fetchPriority="high" decoding="async" style={{ objectPosition: '50% 30%' }} />
+            </div>
+            <Pin ref={pin} className="entrada-alfinete absolute -left-[5%] bottom-[11%] z-[2]">
+              {sale.pins.here}
+            </Pin>
+            <Pin tone="teal" className="entrada-alfinete absolute right-[2%] top-[12%] z-[2] [--atraso:1.15s]">
+              {sale.pins.date}
+            </Pin>
           </div>
-          <Pin ref={pin} className="entrada-alfinete absolute -right-[8%] bottom-[5%] z-[2] min-[900px]:-left-[5%] min-[900px]:right-auto min-[900px]:bottom-[11%]">
-            {sale.pins.here}
-          </Pin>
-          <Pin tone="teal" className="entrada-alfinete absolute right-[2%] top-[12%] z-[2] hidden [--atraso:1.15s] min-[900px]:inline-flex">
-            {sale.pins.date}
-          </Pin>
-        </div>
+        )}
 
         {/* Promessa e chamada */}
-        <section className="relative z-[2] flex w-full max-w-[600px] flex-col items-center px-5 pb-10 text-center min-[900px]:flex-[1_1_54%] min-[900px]:items-start min-[900px]:px-0 min-[900px]:py-8 min-[900px]:text-left">
-          <ImersaoMark className="entrada mt-3 w-[min(230px,64%)] drop-shadow-[0_6px_22px_rgba(0,0,0,0.55)] min-[900px]:mt-0 min-[900px]:w-[300px]" />
+        <section className="relative z-[2] -mt-16 flex w-full max-w-[600px] flex-col items-center px-5 pb-10 text-center min-[900px]:mt-0 min-[900px]:flex-[1_1_54%] min-[900px]:items-start min-[900px]:px-0 min-[900px]:py-8 min-[900px]:text-left">
+          <ImersaoMark className="entrada w-[190px] drop-shadow-[0_6px_22px_rgba(0,0,0,0.75)] min-[900px]:w-[300px]" />
           <Seal />
           <h1 className="mb-3 mt-4 text-balance text-[clamp(26px,7vw,33px)] leading-[1.12] text-cream [text-shadow:0_3px_24px_rgba(0,0,0,0.6)] min-[900px]:mb-4 min-[900px]:mt-6 min-[900px]:text-[clamp(34px,3.4vw,48px)]">
             {rich(sale.title, { em: 'ouro italic' })}

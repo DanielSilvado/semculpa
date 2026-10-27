@@ -4,7 +4,8 @@ import { rich } from '../lib/rich'
 import { BrandMark } from '../components/BrandMark'
 import { LeadForm } from '../components/LeadForm'
 import { useHeroRoute } from '../lib/heroRoute'
-import { CompassRose, Pin, Trail } from './ui'
+import { useWide } from '../lib/media'
+import { CompassRose, MobilePhotoTop, Pin, Trail } from './ui'
 
 /** Faixa fixa do topo. */
 export function CaptureTopBar() {
@@ -52,6 +53,7 @@ function Seal() {
 export function CaptureHero() {
   const { fill } = useEventClock()
   const { area, pin, form, route } = useHeroRoute()
+  const wide = useWide()
   const subtitle = rich(fill(capture.subtitle), { strong: 'font-bold text-gold-light' })
   return (
     <main
@@ -63,24 +65,27 @@ export function CaptureHero() {
         <Trail d={route.d} viewBox={`0 0 ${route.w} ${route.h}`} drawn className="trilha-topo pointer-events-none absolute inset-0 z-[1] h-full w-full" />
       )}
 
-      {/* Bússola: a Milena no centro da rosa dos ventos */}
-      <div className="relative mt-5 flex aspect-square w-[min(62vw,29svh)] shrink-0 items-center justify-center min-[900px]:mt-0 min-[900px]:w-[min(40vw,540px)] [@media(max-height:700px)_and_(max-width:899px)]:w-[min(50vw,24svh)]">
-        <div aria-hidden="true" className="halo left-1/2 top-1/2 aspect-square w-[125%]" />
-        <CompassRose className="entrada-rosa rosa-gira absolute inset-0 h-full w-full text-gold-light/70" />
-        <div className="bussola-foto entrada-foto relative aspect-square w-[64%]">
-          <img src={capture.photo} alt={capture.photoAlt} width={796} height={796} fetchPriority="high" decoding="async" />
+      {/* Celular: a Milena de ponta a ponta. Desktop: a Milena no centro da rosa dos ventos */}
+      {!wide && <MobilePhotoTop src={capture.photo} alt={capture.photoAlt} width={796} height={796} position="55% 22%" />}
+      {wide && (
+        <div className="relative flex aspect-square w-[min(40vw,540px)] shrink-0 items-center justify-center">
+          <div aria-hidden="true" className="halo left-1/2 top-1/2 aspect-square w-[125%]" />
+          <CompassRose className="entrada-rosa rosa-gira absolute inset-0 h-full w-full text-gold-light/70" />
+          <div className="bussola-foto entrada-foto relative aspect-square w-[64%]">
+            <img src={capture.photo} alt={capture.photoAlt} width={796} height={796} fetchPriority="high" decoding="async" />
+          </div>
+          <Pin ref={pin} className="entrada-alfinete absolute -left-[5%] bottom-[11%] z-[2]">
+            {capture.pins.here}
+          </Pin>
+          <Pin tone="teal" className="entrada-alfinete absolute right-[2%] top-[12%] z-[2] [--atraso:1.15s]">
+            {fill(capture.pins.date)}
+          </Pin>
         </div>
-        <Pin ref={pin} className="entrada-alfinete absolute -right-[8%] bottom-[5%] z-[2] min-[900px]:-left-[5%] min-[900px]:right-auto min-[900px]:bottom-[11%]">
-          {capture.pins.here}
-        </Pin>
-        <Pin tone="teal" className="entrada-alfinete absolute [--atraso:1.15s] right-[2%] top-[12%] z-[2] hidden min-[900px]:inline-flex">
-          {fill(capture.pins.date)}
-        </Pin>
-      </div>
+      )}
 
       {/* Texto e formulário */}
-      <section className="relative z-[2] flex w-full max-w-[580px] flex-col items-center px-5 pb-6 text-center min-[900px]:flex-[1_1_54%] min-[900px]:items-start min-[900px]:px-0 min-[900px]:py-8 min-[900px]:text-left">
-        <BrandMark tone="dark" className="entrada mt-3 w-[min(220px,62%)] drop-shadow-[0_6px_22px_rgba(0,0,0,0.55)] min-[900px]:mt-0 min-[900px]:w-[300px]" />
+      <section className="relative z-[2] -mt-16 flex w-full max-w-[580px] flex-col items-center px-5 pb-6 text-center min-[900px]:mt-0 min-[900px]:flex-[1_1_54%] min-[900px]:items-start min-[900px]:px-0 min-[900px]:py-8 min-[900px]:text-left">
+        <BrandMark tone="dark" className="entrada w-[190px] drop-shadow-[0_6px_22px_rgba(0,0,0,0.75)] min-[900px]:w-[300px]" />
         <Seal />
         <h1 className="mb-3 mt-4 text-balance text-[clamp(24px,6.6vw,31px)] leading-[1.12] text-cream [text-shadow:0_3px_24px_rgba(0,0,0,0.6)] min-[900px]:mb-4 min-[900px]:mt-6 min-[900px]:text-[clamp(32px,3.2vw,44px)] [@media(max-height:700px)_and_(max-width:899px)]:text-[22px]">
           {rich(capture.title, { em: 'ouro italic' })}
