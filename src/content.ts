@@ -31,7 +31,7 @@ export const links = {
    * URL do Google Apps Script que grava o lead na planilha (ver apps-script/README.md).
    * Enquanto for null, o cadastro não é enviado e a pessoa segue direto para o grupo.
    */
-  leadWebhook: null as string | null,
+  leadWebhook: 'https://script.google.com/macros/s/AKfycbyEjN0DRGRHvZ1MpjWO71IPl5mjp_uQ0Pla37ZtkO1s8eIA2zCQ4-nlRXtGoHfpFll92g/exec' as string | null,
 }
 
 export const tracking = {
