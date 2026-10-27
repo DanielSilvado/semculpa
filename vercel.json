@@ -8,7 +8,7 @@
       "permanent": false
     },
     {
-      "source": "/venda/:path*",
+      "source": "/venda/(.*)",
       "has": [{ "type": "host", "value": "aula-mapa-do-posicionamento.vercel.app" }],
       "destination": "https://imersao-sem-culpa.vercel.app/",
       "permanent": false
@@ -20,7 +20,7 @@
       "permanent": false
     },
     {
-      "source": "/aula/:path*",
+      "source": "/aula/(.*)",
       "has": [{ "type": "host", "value": "imersao-sem-culpa.vercel.app" }],
       "destination": "https://aula-mapa-do-posicionamento.vercel.app/",
       "permanent": false
