@@ -2,6 +2,8 @@
  * Recebe os cadastros da página "O Mapa do Posicionamento" e grava na planilha.
  * Instalação: ver apps-script/README.md.
  */
+/** Planilha de leads da aula (o ID é o trecho entre /d/ e /edit no link). */
+const SPREADSHEET_ID = '1T1UNEdkxrXO6o11alni8e8TMqoWTJF_7T3fzHZuZZEE'
 const SHEET_NAME = 'Leads'
 const HEADERS = [
   'Data/hora',
@@ -50,7 +52,7 @@ function doPost(e) {
 }
 
 function getSheet_() {
-  const ss = SpreadsheetApp.getActiveSpreadsheet()
+  const ss = SpreadsheetApp.openById(SPREADSHEET_ID)
   const sheet = ss.getSheetByName(SHEET_NAME) || ss.insertSheet(SHEET_NAME)
   if (sheet.getLastRow() === 0) {
     sheet.appendRow(HEADERS)

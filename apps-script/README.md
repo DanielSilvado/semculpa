@@ -4,7 +4,7 @@ Grava cada cadastro da página numa planilha do Google: data/hora, nome, WhatsAp
 
 ## Instalação (uns 5 minutos)
 
-1. Crie uma planilha nova no Google Sheets (ex.: "Leads · O Mapa do Posicionamento").
+1. Abra a planilha de leads: <https://docs.google.com/spreadsheets/d/1T1UNEdkxrXO6o11alni8e8TMqoWTJF_7T3fzHZuZZEE/edit>. O script já aponta para ela (`SPREADSHEET_ID` em `Code.gs`).
 2. No menu, abra **Extensões → Apps Script**.
 3. Apague o conteúdo do arquivo `Código.gs` e cole todo o conteúdo de [`Code.gs`](./Code.gs). Salve.
 4. Clique em **Implantar → Nova implantação**.
