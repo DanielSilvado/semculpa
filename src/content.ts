@@ -262,10 +262,10 @@ export const sale = {
   /** Início da imersão, com fuso de Brasília (usado na contagem regressiva). */
   startsAt: '2026-11-11T20:00:00-03:00',
   /**
-   * PENDENTE: link de pagamento (liberado na live de 03/11).
-   * Enquanto for null, os botões de compra levam ao grupo do WhatsApp.
+   * Link de pagamento (Kiwify). Trocando por null, os botões de compra
+   * voltam a levar ao grupo do WhatsApp.
    */
-  checkout: null as string | null,
+  checkout: 'https://pay.kiwify.com.br/tgihBkd' as string | null,
 
   topBar: { label: 'Inscrições abertas', date: 'Imersão 11/11 · 20h' },
   seal: { live: 'Ao vivo', date: '11.11', time: '20h00', place: 'Brasília' },
