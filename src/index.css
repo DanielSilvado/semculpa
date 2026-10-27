@@ -1,0 +1,906 @@
+@import 'tailwindcss';
+
+/* ---------------------------------------------------------------------------
+   Identidade visual (mesma da página da Imersão Posicione-se Sem Culpa)
+   --------------------------------------------------------------------------- */
+@theme {
+  --color-navy: #1e3048;
+  --color-teal: #326a69;
+  --color-teal-dark: #244e4d;
+  --color-mint: #e5eeea;
+  --color-sand: #eef0eb;
+  --color-cream: #fbf8f2;
+  --color-gold: #ae8e5b;
+  --color-gold-light: #d5b987;
+  --color-ink: #263643;
+  --color-muted: #647078;
+  --color-line: #d4dcd8;
+  --color-error: #a3413a;
+
+  /* Página de captura (versão noturna da mesma identidade) */
+  --color-night: #0d1623;
+  --color-night-2: #142135;
+  --color-champagne: #f3e6c8;
+  --color-mist: #a9b8c4;
+  --color-teal-light: #7fb3ae;
+
+  --font-serif: Georgia, 'Times New Roman', serif;
+  --font-sans: 'Helvetica Neue', Arial, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--color-cream);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Cpath fill='%231e3048' opacity='.035' filter='url(%23n)' d='M0 0h160v160H0z'/%3E%3C/svg%3E");
+    color: var(--color-ink);
+    line-height: 1.7;
+  }
+
+  ::selection {
+    background: rgba(50, 106, 105, 0.2);
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    line-height: 1.15;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-gold);
+    outline-offset: 4px;
+  }
+}
+
+@layer components {
+  /* Textura clara para as seções coloridas */
+  .texture-light {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.6' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Cpath fill='%23ffffff' opacity='.045' filter='url(%23n)' d='M0 0h160v160H0z'/%3E%3C/svg%3E");
+  }
+
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    line-height: 1.5;
+  }
+
+  .btn-teal {
+    @apply relative inline-flex min-h-14 w-full items-center justify-center gap-4 overflow-hidden rounded-[3px] border border-teal bg-teal px-6 py-4 text-center text-[15px] font-bold text-white transition-colors duration-200 hover:bg-teal-dark disabled:cursor-wait disabled:opacity-80 sm:w-auto;
+    animation: pulso-teal 2.2s ease-in-out infinite;
+  }
+  .btn-teal::after {
+    content: '';
+    position: absolute;
+    inset: -50%;
+    background: linear-gradient(100deg, transparent 40%, rgba(255, 255, 255, 0.28) 50%, transparent 60%);
+    animation: brilho 3.2s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  /* ===== Página de captura ===== */
+  .cap-page {
+    background:
+      radial-gradient(ellipse 75% 50% at 50% 8%, rgba(50, 106, 105, 0.32), transparent 70%),
+      radial-gradient(ellipse 60% 45% at 85% 95%, rgba(174, 142, 91, 0.14), transparent 70%),
+      var(--color-night);
+    color: #dde5ea;
+  }
+  /*
+   * Curvas de nível de mapa, paradas ao fundo enquanto o conteúdo rola por cima.
+   * Somem no centro da tela (onde fica o texto) e aparecem só nas margens.
+   */
+  .cap-page::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: url('/images/topo.svg') center / cover no-repeat;
+    opacity: 0.07;
+    -webkit-mask-image: radial-gradient(ellipse 58% 62% at 50% 50%, transparent 35%, #000 100%);
+    mask-image: radial-gradient(ellipse 58% 62% at 50% 50%, transparent 35%, #000 100%);
+  }
+
+  /* ===== Elementos de mapa ===== */
+  .rosa-gira {
+    animation: roda 120s linear infinite;
+  }
+
+  .bussola-foto {
+    border-radius: 50%;
+    padding: 4px;
+    background: linear-gradient(160deg, #fbf1da, #d5b987 40%, #a8844f 75%, #d5b987);
+    box-shadow:
+      0 0 0 7px rgba(13, 22, 35, 0.92),
+      0 0 0 8px rgba(213, 185, 135, 0.35),
+      0 24px 60px -12px rgba(0, 0, 0, 0.85);
+  }
+  .bussola-foto img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: 42% 22%;
+  }
+
+  .alfinete {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+    padding: 6px 12px 6px 8px;
+    border-radius: 999px;
+    background: var(--color-champagne);
+    color: var(--color-night-2);
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    line-height: 1;
+    box-shadow: 0 8px 22px -6px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(251, 241, 218, 0.6);
+  }
+  .alfinete svg {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+    color: var(--color-teal);
+  }
+  .alfinete-teal {
+    background: var(--color-teal);
+    color: #fff;
+    box-shadow: 0 8px 22px -6px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(127, 179, 174, 0.6);
+  }
+  .alfinete-teal svg {
+    color: var(--color-champagne);
+  }
+  /* A parada "cai" no mapa quando a rota chega nela */
+  .parada {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.9);
+    transition: opacity 0.4s ease 0.9s, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.9s;
+  }
+  .parada-chegou {
+    opacity: 1;
+    transform: none;
+  }
+
+  .trilha {
+    overflow: visible;
+  }
+  /* Tracejado de mapa do tesouro, com leve brilho dourado */
+  .trilha-pontos {
+    fill: none;
+    stroke: var(--color-gold-light);
+    stroke-width: 2.6;
+    stroke-linecap: round;
+    stroke-dasharray: 9 8;
+    filter: drop-shadow(0 0 4px rgba(213, 185, 135, 0.45));
+  }
+  .trilha-topo .trilha-pontos {
+    opacity: 0.85;
+  }
+  .trilha-mascara {
+    fill: none;
+    stroke: #fff;
+    stroke-width: 12;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+  }
+  .trilha-desenhada .trilha-mascara {
+    animation: risca 1.4s ease-in-out forwards;
+  }
+  .trilha-topo .trilha-mascara {
+    animation-delay: 0.5s;
+    animation-duration: 1.8s;
+  }
+
+  .selo-coordenada {
+    font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    padding: 9px 16px;
+  }
+
+  .destino {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    border: 1px solid rgba(213, 185, 135, 0.6);
+    background: radial-gradient(circle, rgba(213, 185, 135, 0.25), rgba(13, 22, 35, 0.9) 70%);
+    color: var(--color-gold-light);
+    box-shadow: 0 0 0 6px rgba(213, 185, 135, 0.08), 0 0 30px -4px rgba(213, 185, 135, 0.5);
+  }
+  .destino::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 50%;
+    border: 1px solid rgba(213, 185, 135, 0.5);
+    animation: onda 2.4s ease-out infinite;
+  }
+
+  /* ===== Página de venda ===== */
+  .citacao {
+    position: relative;
+    padding: 18px 22px 18px 26px;
+    border-left: 3px solid var(--color-gold-light);
+    border-radius: 0 16px 16px 0;
+    background: linear-gradient(90deg, rgba(213, 185, 135, 0.12), transparent);
+    font-family: var(--font-serif);
+    font-size: clamp(19px, 4.6vw, 23px);
+    font-style: italic;
+    line-height: 1.4;
+    color: var(--color-champagne);
+    text-align: left;
+  }
+
+  /* Trilhas tracejadas feitas em CSS (verticais e horizontais) */
+  .trilha-vertical,
+  .trilha-horizontal {
+    pointer-events: none;
+    filter: drop-shadow(0 0 4px rgba(213, 185, 135, 0.45));
+  }
+  .trilha-vertical {
+    width: 2.6px;
+    background: repeating-linear-gradient(to bottom, var(--color-gold-light) 0 9px, transparent 9px 17px);
+  }
+  .trilha-horizontal {
+    height: 2.6px;
+    background: repeating-linear-gradient(to right, var(--color-gold-light) 0 9px, transparent 9px 17px);
+  }
+
+  /* Marco numerado de cada passo da trilha */
+  .marco {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    width: 56px;
+    height: 56px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    border: 1px solid rgba(213, 185, 135, 0.7);
+    background: radial-gradient(circle at 35% 30%, #22344c, var(--color-night) 70%);
+    font-family: var(--font-serif);
+    font-size: 26px;
+    color: var(--color-gold-light);
+    box-shadow: 0 0 0 6px rgba(13, 22, 35, 0.9), 0 0 26px -6px rgba(213, 185, 135, 0.6);
+  }
+  @media (min-width: 700px) {
+    .marco {
+      width: 72px;
+      height: 72px;
+      font-size: 32px;
+    }
+  }
+
+  .kit-moldura {
+    position: relative;
+    margin: 0;
+    padding: 18px 18px 12px;
+    border-radius: 24px;
+    border: 1px solid rgba(213, 185, 135, 0.25);
+    background: radial-gradient(ellipse at 50% 40%, rgba(243, 230, 200, 0.18), rgba(255, 255, 255, 0.02) 70%);
+  }
+
+  .foto-trajetoria {
+    margin: 0;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    border-radius: 14px;
+    border: 1px solid rgba(213, 185, 135, 0.35);
+    background: var(--color-night-2);
+    box-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.9);
+    filter: grayscale(0.55) brightness(0.85);
+  }
+  .foto-trajetoria img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .foto-hoje {
+    aspect-ratio: 2 / 3;
+    border: 2px solid var(--color-gold-light);
+    filter: none;
+    box-shadow: 0 0 0 5px rgba(13, 22, 35, 0.9), 0 0 40px -6px rgba(213, 185, 135, 0.55);
+  }
+
+  .cartao-oferta {
+    border-radius: 28px;
+    border: 1px solid rgba(213, 185, 135, 0.5);
+    background: linear-gradient(160deg, rgba(30, 48, 72, 0.95), rgba(13, 22, 35, 0.98));
+    box-shadow: 0 40px 90px -30px rgba(0, 0, 0, 0.95), 0 0 70px -25px rgba(213, 185, 135, 0.45);
+  }
+  .painel-preco {
+    background:
+      radial-gradient(ellipse 80% 55% at 50% 20%, rgba(213, 185, 135, 0.16), transparent 70%),
+      rgba(50, 106, 105, 0.12);
+    border-top: 1px solid rgba(213, 185, 135, 0.2);
+  }
+  @media (min-width: 900px) {
+    .painel-preco {
+      border-top: 0;
+      border-left: 1px solid rgba(213, 185, 135, 0.2);
+    }
+  }
+
+  .relogio-bloco {
+    display: block;
+    text-align: center;
+    border-radius: 10px;
+    border: 1px solid rgba(213, 185, 135, 0.4);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.02));
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  }
+
+  /* Perguntas: abrem suavemente onde o navegador permite */
+  .pergunta {
+    interpolate-size: allow-keywords;
+    transition: border-color 0.3s;
+  }
+  .pergunta[open] {
+    border-color: rgba(213, 185, 135, 0.5);
+  }
+  .pergunta::details-content {
+    block-size: 0;
+    overflow: hidden;
+    transition: block-size 0.45s cubic-bezier(0.22, 1, 0.36, 1), content-visibility 0.45s allow-discrete;
+  }
+  .pergunta[open]::details-content {
+    block-size: auto;
+  }
+  .pergunta-icone {
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    border: 1px solid rgba(213, 185, 135, 0.5);
+    font-family: var(--font-sans);
+    font-size: 20px;
+    color: var(--color-gold-light);
+    transition: rotate 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .pergunta[open] .pergunta-icone {
+    rotate: 45deg;
+  }
+
+  .barra-fixa {
+    position: fixed;
+    inset: auto 0 0;
+    z-index: 40;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+    border-top: 1px solid rgba(213, 185, 135, 0.35);
+    background: rgba(13, 22, 35, 0.94);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 -12px 30px -12px rgba(0, 0, 0, 0.8);
+    transform: translateY(110%);
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .barra-visivel {
+    transform: none;
+  }
+
+  .ouro {
+    background: linear-gradient(90deg, #a8844f 0%, #d5b987 26%, #fbf1da 44%, #d9bc85 60%, #a8844f 100%);
+    background-size: 220% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: ouro-corre 7s linear infinite;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    padding: 0 0.06em 0.1em 0.02em;
+  }
+
+  .particulas {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+  }
+  .particulas i {
+    position: absolute;
+    bottom: -10px;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #fbf1da 0%, #d5b987 45%, transparent 70%);
+    opacity: 0;
+    animation: sobe linear infinite;
+  }
+
+  .halo {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(213, 185, 135, 0.3) 0%, rgba(50, 106, 105, 0.18) 42%, transparent 68%);
+    animation: respira 6s ease-in-out infinite alternate;
+    pointer-events: none;
+  }
+  .anel-girando {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    border: 1px dashed rgba(213, 185, 135, 0.3);
+    animation: gira 60s linear infinite;
+    pointer-events: none;
+  }
+
+  /* Foto em arco com fio dourado e base que se dissolve no fundo */
+  .arco {
+    position: relative;
+    border-radius: 999px 999px 0 0;
+    padding: 6px 6px 0;
+    background: linear-gradient(180deg, rgba(213, 185, 135, 0.75), rgba(213, 185, 135, 0.08) 85%);
+    -webkit-mask-image: linear-gradient(to top, transparent 0%, #000 20%);
+    mask-image: linear-gradient(to top, transparent 0%, #000 20%);
+  }
+  .arco img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 999px 999px 0 0;
+  }
+
+  .selo {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    white-space: nowrap;
+    padding: 10px 18px;
+    border-radius: 99px;
+    background: linear-gradient(180deg, rgba(20, 33, 53, 0.95), rgba(13, 22, 35, 0.95));
+    font-size: 11.5px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-champagne);
+    box-shadow: 0 0 24px -8px rgba(213, 185, 135, 0.5);
+  }
+  .selo::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(90deg, #a8844f 0%, #d5b987 26%, #fbf1da 44%, #d9bc85 60%, #a8844f 100%);
+    background-size: 220% 100%;
+    animation: ouro-corre 5s linear infinite;
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+
+  .field-dark {
+    @apply h-14 w-full rounded-xl border border-gold-light/35 bg-white/[0.06] px-4 text-base font-semibold text-cream outline-none transition-[border-color,box-shadow,background-color] duration-200 placeholder:font-normal placeholder:text-mist/70 focus:border-gold-light focus:bg-white/[0.09] focus:shadow-[0_0_0_3px_rgba(213,185,135,0.18)] aria-[invalid=true]:border-[#ff9a8f];
+  }
+
+  /* Botão dourado pulsante com reflexo */
+  .moldura-botao {
+    position: relative;
+    isolation: isolate;
+    padding: 5px;
+    border-radius: 18px;
+    background: linear-gradient(180deg, rgba(213, 185, 135, 0.35), rgba(50, 106, 105, 0.15));
+    box-shadow: 0 0 40px -8px rgba(213, 185, 135, 0.45);
+    transition: translate 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  /* Ondas douradas saindo do botão (só transform e opacity: fluido até em celular simples) */
+  .moldura-botao::before,
+  .moldura-botao::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    border: 2px solid rgba(243, 230, 200, 0.7);
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0;
+    animation: onda-botao 2.4s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  }
+  .moldura-botao::after {
+    animation-delay: 1.2s;
+  }
+  @media (hover: hover) {
+    .moldura-botao:hover {
+      translate: 0 -3px;
+    }
+  }
+  .btn-ouro {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 19px 16px;
+    border-radius: 14px;
+    border: 1px solid rgba(251, 241, 218, 0.8);
+    font-size: clamp(14px, 4vw, 17px);
+    font-weight: 800;
+    line-height: 1.25;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #142135;
+    text-shadow: 0 1px 0 rgba(255, 248, 230, 0.6);
+    background: linear-gradient(90deg, #b8955e 0%, #d5b987 20%, #fbf1da 38%, #dcc08b 55%, #b8955e 75%, #c9a971 88%, #b8955e 100%);
+    background-size: 250% 100%;
+    box-shadow: 0 10px 30px -8px rgba(213, 185, 135, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.6), inset 0 -3px 0 rgba(110, 80, 40, 0.3);
+    animation: ouro-fluxo 5s linear infinite, respira-botao 2.4s ease-in-out infinite;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .btn-ouro::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(100deg, transparent 38%, rgba(255, 255, 255, 0.75) 50%, transparent 62%);
+    animation: brilho 2.8s ease-in-out infinite;
+    pointer-events: none;
+  }
+  .btn-ouro:hover {
+    filter: brightness(1.05);
+  }
+  .btn-ouro > * {
+    position: relative;
+    z-index: 1;
+    text-wrap: balance;
+  }
+  .btn-ouro:disabled {
+    cursor: wait;
+    filter: saturate(0.7);
+    animation: ouro-fluxo 1.2s linear infinite;
+  }
+
+  .ponto-vivo {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    animation: ponto-vivo 1.3s ease-out infinite;
+  }
+
+  .vidro {
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid rgba(213, 185, 135, 0.22);
+  }
+
+  .seta-ouro {
+    @apply z-10 flex h-12 w-12 cursor-pointer items-center justify-center rounded-full border border-champagne/90 transition-[filter] duration-200 hover:brightness-110 min-[900px]:absolute min-[900px]:top-1/2 min-[900px]:-translate-y-1/2;
+    background: linear-gradient(135deg, #a8844f 0%, #d5b987 35%, #fbf1da 50%, #dcc08b 70%, #b8955e 100%);
+    box-shadow: 0 10px 26px -8px rgba(0, 0, 0, 0.85), 0 0 22px -6px rgba(213, 185, 135, 0.7);
+  }
+
+  .field {
+    @apply h-14 w-full rounded-[3px] border border-line bg-white px-4 text-base text-ink outline-none transition-[border-color,box-shadow] duration-200 placeholder:text-muted/80 focus:border-teal focus:shadow-[0_0_0_3px_rgba(50,106,105,0.15)] aria-[invalid=true]:border-error;
+  }
+
+  /* Moldura em arco da foto principal, com contorno dourado deslocado */
+  .arch-photo {
+    position: relative;
+    margin: 0;
+    padding: 0 17px 17px 0;
+  }
+  .arch-photo::after {
+    content: '';
+    position: absolute;
+    inset: 24px 0 0 24px;
+    border: 1px solid var(--color-gold);
+    border-radius: 180px 180px 5px 5px;
+    z-index: -1;
+  }
+  .arch-photo img {
+    border-radius: 180px 180px 5px 5px;
+  }
+}
+
+@keyframes ouro-corre {
+  to {
+    background-position: 220% 50%;
+  }
+}
+@keyframes ouro-fluxo {
+  to {
+    background-position: 250% 50%;
+  }
+}
+@keyframes respira-botao {
+  0%,
+  100% {
+    scale: 1;
+  }
+  50% {
+    scale: 1.02;
+  }
+}
+@keyframes onda-botao {
+  0% {
+    opacity: 0.75;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.08, 1.28);
+  }
+}
+
+/* Entrada da primeira tela */
+@keyframes entra-subindo {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+  }
+}
+@keyframes entra-rosa {
+  from {
+    opacity: 0;
+    rotate: -75deg;
+    scale: 0.82;
+  }
+}
+@keyframes entra-foto {
+  from {
+    scale: 0.9;
+  }
+}
+@keyframes entra-alfinete {
+  0% {
+    opacity: 0;
+    translate: 0 -16px;
+    scale: 0.7;
+  }
+  70% {
+    opacity: 1;
+    translate: 0 2px;
+    scale: 1.04;
+  }
+}
+@keyframes modal-entra {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 24px, 0) scale(0.96);
+  }
+}
+@keyframes fundo-entra {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes pulso-teal {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(50, 106, 105, 0.45);
+  }
+  60% {
+    box-shadow: 0 0 0 12px rgba(50, 106, 105, 0);
+  }
+}
+@keyframes brilho {
+  0% {
+    transform: translateX(-120%);
+  }
+  60%,
+  100% {
+    transform: translateX(120%);
+  }
+}
+@keyframes sobe {
+  0% {
+    transform: translateY(0) scale(0.6);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.85;
+  }
+  85% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(-105vh) scale(1.1);
+    opacity: 0;
+  }
+}
+@keyframes respira {
+  from {
+    opacity: 0.75;
+    transform: translate(-50%, -50%) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.03);
+  }
+}
+@keyframes gira {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+@keyframes roda {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes risca {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes onda {
+  from {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  to {
+    transform: scale(1.7);
+    opacity: 0;
+  }
+}
+@keyframes ponto-vivo {
+  0% {
+    box-shadow: 0 0 0 0 currentColor;
+  }
+  70%,
+  100% {
+    box-shadow: 0 0 0 9px transparent;
+  }
+}
+
+/* ===== Movimento ===== */
+
+/* Primeira tela: cada peça chega em sequência. O título fica parado para não atrasar o carregamento. */
+.entrada {
+  animation: entra-subindo 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--atraso, 0s);
+}
+.entrada-rosa {
+  animation: entra-rosa 1.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.entrada-foto {
+  animation: entra-foto 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.entrada-alfinete {
+  animation: entra-alfinete 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation-delay: var(--atraso, 0.9s);
+}
+
+/* Seções: sobem suavemente ao entrar na tela (classe ligada em main.tsx) */
+.js-revela [data-revelar],
+.js-revela [data-revelar-filhos] > * {
+  opacity: 0;
+  transform: translate3d(0, 28px, 0);
+  transition:
+    opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1) var(--atraso, 0s),
+    transform 1s cubic-bezier(0.22, 1, 0.36, 1) var(--atraso, 0s);
+}
+.js-revela [data-revelar='zoom'] {
+  transform: scale(0.94);
+}
+/* Trilhas que se desenham ao aparecer */
+.js-revela [data-revelar='linha'] {
+  opacity: 1;
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 1.8s cubic-bezier(0.45, 0, 0.2, 1);
+}
+.js-revela [data-revelar='linha-h'] {
+  opacity: 1;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1.6s cubic-bezier(0.45, 0, 0.2, 1) 0.3s;
+}
+.js-revela [data-revelar].visivel,
+.js-revela [data-revelar-filhos].visivel > * {
+  opacity: 1;
+  transform: none;
+}
+
+/* Cards respondem ao mouse com um leve levantar */
+@media (hover: hover) {
+  .card-mapa {
+    transition:
+      translate 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 0.35s,
+      background-color 0.35s;
+  }
+  .card-mapa:hover {
+    translate: 0 -4px;
+    border-color: rgba(213, 185, 135, 0.55);
+    background-color: rgba(255, 255, 255, 0.06);
+  }
+}
+
+.rosa-gira,
+.particulas i {
+  will-change: transform;
+}
+
+dialog[open] {
+  animation: modal-entra 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+dialog[open]::backdrop {
+  animation: fundo-entra 0.4s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .entrada,
+  .entrada-rosa,
+  .entrada-foto,
+  .entrada-alfinete,
+  .moldura-botao::before,
+  .moldura-botao::after,
+  dialog[open],
+  dialog[open]::backdrop {
+    animation: none;
+  }
+  .particulas,
+  .anel-girando {
+    display: none;
+  }
+  .ouro,
+  .selo::before,
+  .btn-ouro,
+  .btn-ouro::after,
+  .btn-teal,
+  .btn-teal::after,
+  .halo,
+  .ponto-vivo,
+  .rosa-gira,
+  .destino::after {
+    animation: none;
+  }
+  /* Rota já desenhada e paradas já no lugar */
+  .trilha-mascara {
+    stroke-dashoffset: 0;
+    animation: none !important;
+  }
+  .parada {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+}

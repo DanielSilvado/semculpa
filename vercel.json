@@ -1,0 +1,18 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "redirects": [
+    {
+      "source": "/venda/:path*",
+      "has": [{ "type": "host", "value": "mapa-do-posicionamento.vercel.app" }],
+      "destination": "https://imersao-sem-culpa.vercel.app/",
+      "permanent": false
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/",
+      "has": [{ "type": "host", "value": "imersao-sem-culpa.vercel.app" }],
+      "destination": "/venda/index.html"
+    }
+  ]
+}
