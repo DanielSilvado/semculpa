@@ -11,7 +11,7 @@ export default defineConfig({
     cssMinify: true,
     rollupOptions: {
       input: {
-        captura: resolve(import.meta.dirname, 'index.html'),
+        captura: resolve(import.meta.dirname, 'aula/index.html'),
         posLive: resolve(import.meta.dirname, 'pos-live/index.html'),
         venda: resolve(import.meta.dirname, 'venda/index.html'),
       },

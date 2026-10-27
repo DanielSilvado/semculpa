@@ -2,9 +2,27 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "redirects": [
     {
+      "source": "/venda",
+      "has": [{ "type": "host", "value": "aula-mapa-do-posicionamento.vercel.app" }],
+      "destination": "https://imersao-sem-culpa.vercel.app/",
+      "permanent": false
+    },
+    {
       "source": "/venda/:path*",
       "has": [{ "type": "host", "value": "aula-mapa-do-posicionamento.vercel.app" }],
       "destination": "https://imersao-sem-culpa.vercel.app/",
+      "permanent": false
+    },
+    {
+      "source": "/aula",
+      "has": [{ "type": "host", "value": "imersao-sem-culpa.vercel.app" }],
+      "destination": "https://aula-mapa-do-posicionamento.vercel.app/",
+      "permanent": false
+    },
+    {
+      "source": "/aula/:path*",
+      "has": [{ "type": "host", "value": "imersao-sem-culpa.vercel.app" }],
+      "destination": "https://aula-mapa-do-posicionamento.vercel.app/",
       "permanent": false
     }
   ],
@@ -13,6 +31,10 @@
       "source": "/",
       "has": [{ "type": "host", "value": "imersao-sem-culpa.vercel.app" }],
       "destination": "/venda/index.html"
+    },
+    {
+      "source": "/",
+      "destination": "/aula/index.html"
     }
   ]
 }
